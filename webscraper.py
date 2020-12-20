@@ -8,6 +8,7 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 
+############### MONSTER.COM #####################
 # Getting info from static monster.com page
 # URL = 'https://www.monster.com/jobs/search/?q=Software-Engineer&where=Oregon'
 # page = requests.get(URL)
@@ -44,8 +45,12 @@ from bs4 import BeautifulSoup
 # print('Enter password : ', end ='') 
 # password = input().strip() 
 
-email = 'pythonwebscraper0@gmail.com'
-passwd = 'throwawaytest999'
+############### ZIPPIA.COM ##################
+# Get user login info
+print('Enter email id : ', end ='') 
+email = input().strip() 
+print('Enter password : ', end ='') 
+passwd = input().strip()
 
 URL = 'https://www.zippia.com/matches/'
 driver = webdriver.Chrome(executable_path=r'C:\webdriver\chromedriver.exe')
@@ -91,8 +96,38 @@ input_passwd.send_keys(passwd)
 driver.find_element_by_xpath('//*[@id="passwordNext"]/div/button').click()
 
 # Go back to main page
-driver.switch_to_window(main_page)
+driver.switch_to.window(main_page)
+
 
 driver.implicitly_wait(3)
 # Go to the My Jobs tab
 driver.find_element_by_xpath('//*[@id="__next"]/header/nav/div/div[2]/ul/li[1]/span').click()
+
+driver.implicitly_wait(3)
+jobSearch = driver.find_element_by_id('jobSearch')
+jobSearch.send_keys('Software Engineer')
+jobSearch.send_keys(Keys.ENTER)
+
+locationDD = driver.find_element_by_xpath('//*[@id="matchesSection"]/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div/div[1]')
+locationDD.click()
+# Select work from home option
+driver.find_element_by_xpath('//*[@id="matchesSection"]/div/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div/div[2]/div[2]/div[2]/div[2]/div/div/span').click()
+locationInput = driver.find_element_by_xpath('//*[@id="locationNameMultiFilter59f55046-b7b0-4dcd-9711-b38707f597bf"]')
+locationInput.send_keys('Oregon')
+locationInput.send_keys(Keys.ENTER)
+# Apply location filters
+driver.find_element_by_xpath('//*[@id="matchesSection"]/div/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div/div[2]/div[2]/div[3]/div[2]/span')
+
+jobLevelDD = driver.find_element_by_xpath('//*[@id="matchesSection"]/div/div/div[1]/div[2]/div/div[2]/div[4]/div/div[1]')
+jobLevelDD.click()
+# Select the entry level option
+driver.find_element_by_xpath('//*[@id="matchesSection"]/div/div/div[1]/div[2]/div[2]/div[2]/div[4]/div/div[2]/div[2]/div[2]/div/div[1]/div/span').click()
+# Apply job level filter
+driver.find_element_by_xpath('//*[@id="matchesSection"]/div/div/div[1]/div[2]/div[2]/div[2]/div[4]/div/div[2]/div[2]/div[3]/div[2]/span').click()
+
+datePostedDD = driver.find_element_by_xpath('//*[@id="matchesSection"]/div/div/div[1]/div[2]/div/div[2]/div[6]/div/div[1]')
+datePostedDD.click()
+# Select past week option
+driver.find_element_by_xpath('//*[@id="matchesSection"]/div/div/div[1]/div[2]/div[2]/div[2]/div[6]/div/div[2]/div[2]/div[2]/div/div[3]').click()
+# Apply data filter
+driver.find_element_by_xpath('//*[@id="matchesSection"]/div/div/div[1]/div[2]/div/div[2]/div[6]/div/div[2]/div[2]/div[3]/div[2]/span').click()
